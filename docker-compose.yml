@@ -1,0 +1,17 @@
+services:
+  freegtm:
+    build: .
+    container_name: freegtm
+    restart: unless-stopped
+    networks:
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.freegtm.rule=Host(`freegtm.eithanbenero.com`)"
+      - "traefik.http.routers.freegtm.entrypoints=websecure"
+      - "traefik.http.routers.freegtm.tls.certresolver=letsencrypt"
+      - "traefik.http.services.freegtm.loadbalancer.server.port=3000"
+
+networks:
+  traefik-public:
+    external: true
